@@ -1,0 +1,200 @@
+import time
+import os
+
+
+class Node:
+
+    def __init__(self, professor1, professor2, professor3):
+        self.professor1 = professor1
+        self.professor2 = professor2
+        self.professor3 = professor3
+        self.next = None
+
+    def professor1Get(self):
+        return self.professor1
+
+    def professor1Set(self, professor1):
+        self._professor1 = professor1
+
+    def professor2Get(self):
+        return self.professor2
+
+    def professor2Set(self, professor2):
+        self._professor2 =professor2
+
+    def professor3Get (self):
+        return self.professor3
+
+    def professor3Set(self, professor3):
+        self._professor3 = professor3
+
+    def getNext(self):
+        return self.next
+
+    def setNext(self, next):
+        self.next = next
+
+
+class LinkedList:
+
+    def __init__(self):
+        self.first = None
+        self.last = None
+        self.len_list = 0
+
+    def push(self, professor1,professor2,professor3, index):
+
+        if index >= 0:
+
+            
+            node = Node(professor1,professor2, professor3)
+
+           
+            if self.empty():
+                self.first = node
+                self.last = node
+            else:
+
+                if index == 0:
+                  
+                    node.setNext(self.first)
+                    self.first = node
+                elif index >= self.len_list:
+                    
+                    self.last.setNext(node)
+                    self.last = node
+                else:
+                   
+                    prev_node = self.first
+                    curr_node = self.first.getNext()
+                    curr_index = 1
+
+                    while curr_node != None:
+
+                        if curr_index == index:
+                            
+                            node.setNext(curr_node)
+                            
+                            prev_node.setNext(node)
+
+                        prev_node = curr_node
+                        curr_node = curr_node.getNext()
+                        curr_index += 1
+
+            
+            self.len_list += 1
+
+    def pop(self, index):
+
+        if not self.empty() and index >= 0 and index < self.len_list:
+
+            flag_remove = False
+
+            if self.first.getNext() == None:
+               
+                self.first = None
+                self.last = None
+                flag_remove = True
+            elif index == 0:
+                
+                self.first = self.first.getNext()
+                flag_remove = True
+            else:
+                '''
+                    Se chegou aqui é porque a lista possui mais
+                    de 1 elemento e a remoção não é no início
+                '''
+
+                prev_node = self.first
+                curr_node = self.first.getNext()
+                curr_index = 1
+
+                while curr_node != None:
+
+                    if index == curr_index:
+                        
+                        prev_node.setNext(curr_node.getNext())
+                        curr_node.setNext(None)
+                        flag_remove = True
+                        break
+
+                    prev_node = curr_node
+                    curr_node = curr_node.getNext()
+                    curr_index += 1
+
+            if flag_remove:
+               
+                self.len_list -= 1
+
+    def empty(self):
+        if self.first == None:
+            return True
+        return False
+
+    def length(self):
+        return self.len_list
+
+    def show(self):
+        contador = 0
+        curr_node = self.first
+
+        while curr_node != None:
+            print(contador, '-', 'professor1:', curr_node.professor1Get(), 'professor2:', curr_node.professor2Get(),'professor3: ', curr_node.professor3Get())
+            curr_node = curr_node.getNext()
+            contador += 1
+        print('')
+
+    def menu(self, contador=0):
+        while contador == 0:
+            print(35 * '-')
+            print('Insira a opção desejada: \n')
+            opcao = (input('0 - Para sair do programa\n'
+                           '1 - Para inserir\n'
+                           '2 - Para exibir as informações em tela\n'
+                           '3 - Para mostrar o tamanho da lista\n'
+                           '4 - Para apagar um nó\n'
+                           'Opção: '))
+            print(35 * '-')
+            if opcao == '0':
+                contador = 1
+
+            elif opcao == '1':
+                os.system('cls' if os.name == 'nt' else 'clear')
+
+                alimen = input('informe o professor1: ')
+                client = input('informe o professor2: ')
+                funcio = input('informe o professor3: ')
+                posicao = int(input('informe a posição: '))
+                lista.push(alimen, client, funcio,posicao)
+                time.sleep(1)
+                print('\nNó criado com sucesso ')
+                time.sleep(1)
+                os.system('cls' if os.name == 'nt' else 'clear')
+
+            elif opcao == '2':
+                if lista.empty():
+                    print('Lista Vazia')
+                    time.sleep(1)
+                else:
+                    lista.show()
+
+            elif opcao == '3':
+
+                print('Tamanho da lista: {}\n'.format(lista.length()))
+                time.sleep(1)
+
+            elif opcao == '4':
+                os.system('cls' if os.name == 'nt' else 'clear')
+
+                lista.show()
+                nó = int(input('Informe a posição do nó que deseja remover: '))
+                lista.pop(nó)
+                time.sleep(1)
+                print('\nNó removido')
+                print(35 * '-')
+                lista.show()
+                time.sleep(2)
+
+
+lista = LinkedList()
+lista.menu()
