@@ -100,10 +100,7 @@ class LinkedList:
                 self.first = self.first.getNext()
                 flag_remove = True
             else:
-                '''
-                    Se chegou aqui é porque a lista possui mais
-                    de 1 elemento e a remoção não é no início
-                '''
+        
 
                 prev_node = self.first
                 curr_node = self.first.getNext()
