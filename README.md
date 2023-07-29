@@ -12,4 +12,4 @@ Linguagens Formais e Autômatos;
 
 Teoria dos Grafos; 
 
-A maioria dos algorimos foi esccrito utilizando JAVA e PYTHON.
+A maioria dos algorimos foi escrito utilizando JAVA e PYTHON.
